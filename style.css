@@ -1,24 +1,15 @@
 :root {
-    /* Palette Warna Utama */
     --sage-green: #B2AC88;
     --baby-pink: #F4CFDF;
     --soft-yellow: #FCF4A3;
     --light-blue: #B8D1E6;
-    
-    /* Gradien Background untuk kesan lebih "Berwarna" */
-    --bg-peach: #FFF5F7;
-    --bg-lavender: #F0F4FF;
-    --bg-mint: #F9FFF0;
-    
-    /* Warna Aksen */
     --deep-pink: #FFB6C1;
     --glass-white: rgba(255, 255, 255, 0.75);
 }
 
 body {
     font-family: 'Quicksand', sans-serif;
-    /* Background gradien animasi yang sangat lembut */
-    background: linear-gradient(135deg, var(--bg-peach), var(--bg-lavender), var(--bg-mint));
+    background: linear-gradient(135deg, #FFF5F7, #F0F4FF, #F9FFF0);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     background-attachment: fixed;
@@ -28,6 +19,7 @@ body {
     justify-content: center;
     overflow-x: hidden; 
     min-height: 100vh;
+    transition: background 0.8s ease;
 }
 
 @keyframes gradientBG {
@@ -36,47 +28,77 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* --- Flying Elements Logic --- */
-.butterfly, .bubble {
-    position: fixed; 
-    pointer-events: none; 
-    z-index: 1000; 
-    display: inline-block;
+/* --- TAB NAVIGATION --- */
+.tab-parent {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    z-index: 20;
+    position: relative;
 }
 
-@keyframes pathLeft {
-    0% { left: -50px; top: 20%; transform: rotate(0deg); }
-    100% { left: 110vw; top: 15%; transform: rotate(20deg); }
-}
-@keyframes pathRight {
-    0% { right: -50px; top: 70%; transform: scaleX(-1) rotate(0deg); }
-    100% { right: 110vw; top: 50%; transform: scaleX(-1) rotate(-20deg); }
-}
-@keyframes rise {
-    0% { bottom: -50px; opacity: 0; }
-    20% { opacity: 0.5; }
-    100% { bottom: 110vh; opacity: 0; transform: translateX(40px); }
+.tab-btn {
+    flex: 1;
+    max-width: 140px;
+    padding: 12px 5px;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    -webkit-appearance: none;
+    outline: none;
 }
 
-.b-fast { animation: pathLeft 18s linear infinite; font-size: 26px; }
-.b-slow { animation: pathRight 25s linear infinite; font-size: 22px; }
-.bin1 { left: 10%; animation: rise 10s infinite; font-size: 20px; }
-.bin2 { left: 50%; animation: rise 12s infinite 2s; font-size: 15px; }
-.bin3 { left: 85%; animation: rise 9s infinite 1s; font-size: 18px; }
+.tab-btn.active {
+    background: var(--sage-green);
+    color: white;
+    border-color: var(--sage-green);
+    transform: translateY(-2px);
+}
 
-/* --- Container & Symmetric Alignment --- */
+/* --- SUMMARY BOX (FIXED SPACING) --- */
+.summary-box {
+    display: flex; 
+    justify-content: space-between; /* Menjauhkan teks dan angka */
+    align-items: center;
+    margin-bottom: 12px; 
+    padding: 16px 20px; 
+    border-radius: 20px;
+    font-weight: 700; 
+    font-size: 15px; 
+    color: #555;
+    border: 2px solid white;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.summary-box span:last-child {
+    text-align: right;
+    margin-left: 10px;
+}
+
+.blue { background: var(--light-blue); }
+.pink { background: var(--baby-pink); }
+.yellow { background: var(--soft-yellow); }
+
+/* --- OTHER UI ELEMENTS --- */
 .container {
     width: 100%; 
     max-width: 950px;
     background: var(--glass-white);
     backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px);
     padding: 25px 20px; 
     border-radius: 40px; 
     border: 4px solid white; 
     position: relative; 
     z-index: 10;
-    box-shadow: 0 15px 45px rgba(244, 207, 223, 0.5);
     box-sizing: border-box;
 }
 
@@ -86,29 +108,13 @@ header {
     text-align: center; 
     padding: 18px; 
     border-radius: 25px;
-    margin-bottom: 25px; 
-    font-size: 34px; 
+    margin-bottom: 15px; 
+    font-size: 28px; 
     font-weight: 700;
-    box-shadow: 0 8px 20px rgba(178, 172, 136, 0.3);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-/* SYMMETRY FIX: Centers all children on mobile */
-.dashboard-grid { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 20px; 
-    align-items: center; 
-}
-
-.left-panel, .right-panel {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-}
-
-.summary-container { width: 100%; max-width: 450px; }
+.dashboard-grid { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+.left-panel, .right-panel { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
 @media (min-width: 900px) { 
     .dashboard-grid { flex-direction: row; align-items: flex-start; } 
@@ -116,212 +122,43 @@ header {
     .right-panel { width: 60%; }
 }
 
-/* --- UI Elements --- */
-.summary-box {
-    display: flex; 
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px; 
-    padding: 18px; 
-    border-radius: 20px;
-    font-weight: 700; 
-    font-size: 15px; 
-    color: #555;
-    border: 2px solid white;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.summary-box:hover { 
-    transform: translateY(-5px) scale(1.02); 
-}
-
-.blue { background: var(--light-blue); box-shadow: 0 8px 15px rgba(184, 209, 230, 0.4); }
-.pink { background: var(--baby-pink); box-shadow: 0 8px 15px rgba(244, 207, 223, 0.4); }
-.yellow { background: var(--soft-yellow); box-shadow: 0 8px 15px rgba(252, 244, 163, 0.4); }
-
-.squish:active { transform: scale(0.92); transition: 0.1s; }
-
-/* --- Quote Display Layout --- */
-#quote-display {
-    text-align: center;
-    color: var(--sage-green);
-    font-weight: 700;
-    font-size: 14px;
-    margin-bottom: 20px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 15px;
-    border: 2px dashed var(--baby-pink);
-    width: 100%;
-    max-width: 300px;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* --- Photo Frame --- */
 .photo-frame {
-    background: white; 
-    padding: 10px 10px 20px 10px;
-    border-radius: 2px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    text-align: center; 
-    margin: 20px auto; 
-    width: 180px; 
-    transform: rotate(-3deg);
-    transition: all 0.5s ease;
+    background: white; padding: 10px 10px 20px 10px; border-radius: 2px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); width: 180px; transform: rotate(-3deg);
 }
-
-.photo-frame:hover {
-    transform: rotate(0deg) scale(1.1);
-    z-index: 20;
-}
-
-.img-wrapper { width: 100%; height: 220px; overflow: hidden; border-radius: 2px; }
+.img-wrapper { width: 100%; height: 220px; overflow: hidden; }
 #couple-img { width: 100%; height: 100%; object-fit: cover; }
-.photo-caption { font-family: 'Quicksand', cursive; font-size: 1rem; margin-top: 10px; color: var(--sage-green); font-weight: bold; }
-
-/* --- Chart & Table --- */
-.chart-section { width: 100%; max-width: 300px; height: 250px; margin-bottom: 15px; }
-
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-    100% { transform: translateY(0px); }
-}
 
 .love-counter { 
-    width: 100%; 
-    max-width: 300px; 
-    background: white; 
-    border-radius: 25px; 
-    padding: 20px; 
-    text-align: center; 
-    border: 3px solid var(--baby-pink); 
-    margin-bottom: 20px; 
-    animation: floating 4s ease-in-out infinite;
-    box-shadow: 0 10px 20px rgba(244, 207, 223, 0.3);
+    width: 100%; max-width: 300px; background: white; border-radius: 25px; 
+    padding: 20px; text-align: center; border: 3px solid var(--baby-pink); 
+    margin-bottom: 20px;
 }
-.love-counter h2 { margin: 5px 0 0; color: var(--sage-green); font-size: 32px; }
-.love-counter p { margin: 0; color: #888; font-size: 14px; font-weight: 700; }
 
 .table-container { 
-    width: 100%; 
-    background: rgba(255,255,255,0.9); 
-    border-radius: 25px; 
-    padding: 15px; 
-    border: 3px solid white; 
-    overflow-x: auto; 
-    box-sizing: border-box; 
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+    width: 100%; background: rgba(255,255,255,0.9); border-radius: 25px; 
+    padding: 15px; border: 3px solid white; overflow-x: auto; 
 }
-
-/* Scrollbar Cantik */
-.table-container::-webkit-scrollbar { width: 5px; }
-.table-container::-webkit-scrollbar-thumb { background: var(--baby-pink); border-radius: 10px; }
-
 table { width: 100%; border-collapse: collapse; }
-td { padding: 14px 8px; text-align: center; font-size: 13px; border-bottom: 1px solid #f0f0f0; color: #666; }
-th { color: var(--sage-green); padding-bottom: 10px; font-size: 14px; }
-
-/* --- Effects --- */
-.fairy-dust { 
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background-image: 
-        radial-gradient(circle, var(--baby-pink) 1px, transparent 1px),
-        linear-gradient(rgba(244, 207, 223, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244, 207, 223, 0.1) 1px, transparent 1px);
-    background-size: 100px 100px, 40px 40px, 40px 40px;
-    z-index: 0; 
-}
+td { padding: 14px 8px; text-align: center; font-size: 13px; border-bottom: 1px solid #f0f0f0; }
 
 .fab-heart { 
-    position: fixed; 
-    bottom: 30px; 
-    right: 30px; 
-    width: 70px; 
-    height: 70px; 
+    position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px; 
     background: linear-gradient(135deg, var(--baby-pink), var(--deep-pink)); 
-    border-radius: 50%; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    font-size: 32px; 
-    z-index: 100; 
-    box-shadow: 0 8px 25px rgba(255, 182, 193, 0.6); 
-    cursor: pointer;
-    border: 3px solid white;
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+    font-size: 32px; z-index: 100; cursor: pointer; border: 3px solid white;
 }
 
-.pulse {
-    animation: pulse-animation 2s infinite;
-}
+.butterfly, .bubble { position: fixed; pointer-events: none; z-index: 1000; }
+.b-fast { animation: pathLeft 18s linear infinite; font-size: 26px; }
+.b-slow { animation: pathRight 25s linear infinite; font-size: 22px; }
+.bin1 { left: 10%; animation: rise 10s infinite; font-size: 20px; }
+.bin2 { left: 50%; animation: rise 12s infinite 2s; font-size: 15px; }
+.bin3 { left: 85%; animation: rise 9s infinite 1s; font-size: 18px; }
 
-@keyframes pulse-animation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
+@keyframes pathLeft { 0% { left: -50px; top: 20%; } 100% { left: 110vw; top: 15%; } }
+@keyframes pathRight { 0% { right: -50px; top: 70%; } 100% { right: 110vw; top: 50%; } }
+@keyframes rise { 0% { bottom: -50px; opacity: 0; } 100% { bottom: 110vh; opacity: 0; } }
 
-/* --- Perbaikan Sparkle Trail --- */
-.sparkle-trail { 
-    position: fixed; 
-    pointer-events: none; 
-    z-index: 9999; 
-    animation: fadeUp 1s forwards;
-    /* Memastikan elemen muncul tepat di ujung kursor */
-    transform: translate(-50%, -50%); 
-    font-size: 20px;
-}
-
-@keyframes fadeUp { 
-    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
-    100% { opacity: 0; transform: translate(-50%, -120%) scale(0); } 
-}
-
-/* --- New Tab Navigation Styling --- */
-.tab-parent {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-.tab-btn {
-    flex: 1;
-    max-width: 150px;
-    padding: 12px;
-    border: none;
-    border-radius: 18px;
-    background: white;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    color: #888;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    border: 2px solid transparent;
-}
-
-.tab-btn.active {
-    background: var(--sage-green);
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(178, 172, 136, 0.3);
-    border-color: white;
-}
-
-.tab-btn:active {
-    transform: scale(0.95);
-}
-
-/* Memastikan chart tetap proporsional saat ganti data */
-canvas#financeChart {
-    max-width: 100% !important;
-    height: auto !important;
-}
+.sparkle-trail { position: fixed; pointer-events: none; z-index: 9999; animation: fadeUp 1s forwards; transform: translate(-50%, -50%); }
+@keyframes fadeUp { 0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -120%) scale(0); } }

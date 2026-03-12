@@ -2,39 +2,35 @@ const CONFIG = {
     geisha: {
         url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH0cCLqg5AI3A3Ri83cHL2SNov6BNMJrKqme-DPGd9NlrP9OcBnsuUjs8xJ43lGePyClme9t/pub?gid=1764720513&single=true&output=csv",
         name: "Geisha",
-        caption: "I love you Geisha ✨"
+        caption: "I love you Geisha ✨",
+        theme: "linear-gradient(135deg, #FFF5F7, #F0F4FF, #F9FFF0)"
     },
     naufal: {
         url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH0cCLqg5AI3A3Ri83cHL2SNov6BNMJrKqme-DPGd9NlrP9OcBnsuUjs8xJ43lGePyClme9t/pub?gid=1421544875&single=true&output=csv",
         name: "Naufal",
-        caption: "Semangat terus Naufal! 🚀"
+        caption: "Semangat terus Naufal! 🚀",
+        theme: "linear-gradient(135deg, #E0F2F1, #E3F2FD, #F3E5F5)"
     }
 };
 
 let currentUser = 'geisha';
 let myChart;
 
-// --- Switch User Logic ---
-function switchUser(user, btnElement) {
+function switchUser(user, event) {
     if (currentUser === user) return;
-    
     currentUser = user;
 
-    // Update Tab UI
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    btnElement.classList.add('active');
+    event.currentTarget.classList.add('active');
 
-    // Update Header & Caption
+    document.body.style.background = CONFIG[user].theme;
     document.getElementById('main-header').innerHTML = `<span class="magic-star">✨</span> ${CONFIG[user].name} <span class="magic-star">✨</span>`;
     document.getElementById('photo-text').innerText = CONFIG[user].caption;
 
-    // Reset Table & Chart
-    document.getElementById('transaction-table').innerHTML = "<tr><td colspan='4'>Loading data...</td></tr>";
-    
+    document.getElementById('transaction-table').innerHTML = "<tr><td colspan='4' style='padding:20px;'>Memuat data...</td></tr>";
     fetchData();
 }
 
-// --- Mouse Sparkle Trail ---
 document.addEventListener('mousemove', (e) => {
     if (Math.random() > 0.15) return; 
     const s = document.createElement('div');
@@ -46,7 +42,6 @@ document.addEventListener('mousemove', (e) => {
     setTimeout(() => s.remove(), 1000);
 });
 
-// --- Love Counter ---
 function updateLoveCounter() {
     const startDate = new Date("2025-09-09");
     const today = new Date();
@@ -75,7 +70,6 @@ function showRandomQuote() {
     }, 200);
 }
 
-// --- Fetch & Data Logic ---
 async function fetchData() {
     try {
         const response = await fetch(CONFIG[currentUser].url);
@@ -92,7 +86,6 @@ async function fetchData() {
             const [tanggal, kategori, nominalRaw, keterangan] = [cols[5], cols[6], cols[7], cols[8]];
 
             if (!tanggal || tanggal === "Tanggal" || !kategori) return;
-
             const num = parseInt(nominalRaw.replace(/[^0-9]/g, '')) || 0;
 
             if (num > 0) {

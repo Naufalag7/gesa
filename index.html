@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body id="main-body">
 
     <div class="fairy-dust"></div>
     
@@ -24,8 +24,8 @@
         </header>
 
         <div class="tab-parent">
-            <button class="tab-btn active" onclick="switchUser('geisha', this)">✨ Geisha</button>
-            <button class="tab-btn" onclick="switchUser('naufal', this)">💎 Naufal</button>
+            <button class="tab-btn active" onclick="switchUser('geisha', event)">✨ Geisha</button>
+            <button class="tab-btn" onclick="switchUser('naufal', event)">💎 Naufal</button>
         </div>
 
         <div class="dashboard-grid">
@@ -33,15 +33,15 @@
                 <div class="summary-container">
                     <div class="summary-box blue glow-blue squish">
                         <span>Masuk</span>
-                        <span id="total-masuk">...</span>
+                        <span id="total-masuk">Rp 0</span>
                     </div>
                     <div class="summary-box pink glow-pink squish">
                         <span>Keluar</span>
-                        <span id="total-keluar">...</span>
+                        <span id="total-keluar">Rp 0</span>
                     </div>
                     <div class="summary-box yellow glow-yellow squish">
                         <span>Sisa</span>
-                        <span id="sisa-saldo">...</span>
+                        <span id="sisa-saldo">Rp 0</span>
                     </div>
                 </div>
 
