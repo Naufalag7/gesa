@@ -1,18 +1,26 @@
 :root {
+    /* Palette Warna Utama */
     --sage-green: #B2AC88;
     --baby-pink: #F4CFDF;
     --soft-yellow: #FCF4A3;
     --light-blue: #B8D1E6;
-    /* Warna baru untuk gradien background */
+    
+    /* Gradien Background untuk kesan lebih "Berwarna" */
     --bg-peach: #FFF5F7;
     --bg-lavender: #F0F4FF;
     --bg-mint: #F9FFF0;
+    
+    /* Warna Aksen */
+    --deep-pink: #FFB6C1;
+    --glass-white: rgba(255, 255, 255, 0.75);
 }
 
 body {
     font-family: 'Quicksand', sans-serif;
-    /* Background gradien yang lembut dan berwarna */
-    background: linear-gradient(135deg, var(--bg-peach) 0%, var(--bg-lavender) 50%, var(--bg-mint) 100%);
+    /* Background gradien animasi yang sangat lembut */
+    background: linear-gradient(135deg, var(--bg-peach), var(--bg-lavender), var(--bg-mint));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     background-attachment: fixed;
     margin: 0; 
     padding: 15px;
@@ -20,6 +28,12 @@ body {
     justify-content: center;
     overflow-x: hidden; 
     min-height: 100vh;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* --- Flying Elements Logic --- */
@@ -54,28 +68,29 @@ body {
 .container {
     width: 100%; 
     max-width: 950px;
-    background: rgba(255, 255, 255, 0.7); /* Lebih transparan agar gradien terlihat */
-    backdrop-filter: blur(15px); 
-    -webkit-backdrop-filter: blur(15px);
-    padding: 20px; 
-    border-radius: 35px; 
-    border: 3px solid white; /* Border putih tipis untuk kesan glassmorphism */
+    background: var(--glass-white);
+    backdrop-filter: blur(20px); 
+    -webkit-backdrop-filter: blur(20px);
+    padding: 25px 20px; 
+    border-radius: 40px; 
+    border: 4px solid white; 
     position: relative; 
     z-index: 10;
-    box-shadow: 0 10px 40px rgba(244, 207, 223, 0.4);
+    box-shadow: 0 15px 45px rgba(244, 207, 223, 0.5);
     box-sizing: border-box;
 }
 
 header {
-    background: linear-gradient(90deg, var(--sage-green), #9db47f);
+    background: linear-gradient(135deg, var(--sage-green), #9db47f);
     color: white;
     text-align: center; 
-    padding: 15px; 
-    border-radius: 20px;
+    padding: 18px; 
+    border-radius: 25px;
     margin-bottom: 25px; 
-    font-size: 32px; 
+    font-size: 34px; 
     font-weight: 700;
-    box-shadow: 0 5px 15px rgba(178, 172, 136, 0.4);
+    box-shadow: 0 8px 20px rgba(178, 172, 136, 0.3);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
 /* SYMMETRY FIX: Centers all children on mobile */
@@ -105,50 +120,74 @@ header {
 .summary-box {
     display: flex; 
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 12px; 
-    padding: 15px; 
-    border-radius: 18px;
+    padding: 18px; 
+    border-radius: 20px;
     font-weight: 700; 
-    font-size: 14px; 
+    font-size: 15px; 
     color: #555;
-    transition: 0.3s;
+    border: 2px solid white;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.summary-box:hover { transform: translateY(-3px); }
+.summary-box:hover { 
+    transform: translateY(-5px) scale(1.02); 
+}
 
-.blue { background: var(--light-blue); box-shadow: 0 5px 12px var(--light-blue); }
-.pink { background: var(--baby-pink); box-shadow: 0 5px 12px var(--baby-pink); }
-.yellow { background: var(--soft-yellow); box-shadow: 0 5px 12px var(--soft-yellow); }
+.blue { background: var(--light-blue); box-shadow: 0 8px 15px rgba(184, 209, 230, 0.4); }
+.pink { background: var(--baby-pink); box-shadow: 0 8px 15px rgba(244, 207, 223, 0.4); }
+.yellow { background: var(--soft-yellow); box-shadow: 0 8px 15px rgba(252, 244, 163, 0.4); }
 
 .squish:active { transform: scale(0.92); transition: 0.1s; }
+
+/* --- Quote Display Layout --- */
+#quote-display {
+    text-align: center;
+    color: var(--sage-green);
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    border: 2px dashed var(--baby-pink);
+    width: 100%;
+    max-width: 300px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /* --- Photo Frame --- */
 .photo-frame {
     background: white; 
-    padding: 8px 8px 15px 8px;
-    border-radius: 5px; 
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    padding: 10px 10px 20px 10px;
+    border-radius: 2px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     text-align: center; 
     margin: 20px auto; 
-    width: 160px; 
-    transform: rotate(-2deg);
-    transition: 0.3s ease;
+    width: 180px; 
+    transform: rotate(-3deg);
+    transition: all 0.5s ease;
 }
 
 .photo-frame:hover {
-    transform: rotate(0deg) scale(1.05);
+    transform: rotate(0deg) scale(1.1);
+    z-index: 20;
 }
 
-.img-wrapper { width: 100%; height: 200px; overflow: hidden; border-radius: 2px; }
+.img-wrapper { width: 100%; height: 220px; overflow: hidden; border-radius: 2px; }
 #couple-img { width: 100%; height: 100%; object-fit: cover; }
-.photo-caption { font-family: cursive; font-size: 0.9rem; margin-top: 8px; color: var(--sage-green); }
+.photo-caption { font-family: 'Quicksand', cursive; font-size: 1rem; margin-top: 10px; color: var(--sage-green); font-weight: bold; }
 
 /* --- Chart & Table --- */
-.chart-section { width: 100%; max-width: 300px; height: 250px; margin-bottom: 10px; }
+.chart-section { width: 100%; max-width: 300px; height: 250px; margin-bottom: 15px; }
 
 @keyframes floating {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-12px); }
     100% { transform: translateY(0px); }
 }
 
@@ -156,66 +195,89 @@ header {
     width: 100%; 
     max-width: 300px; 
     background: white; 
-    border-radius: 20px; 
-    padding: 15px; 
+    border-radius: 25px; 
+    padding: 20px; 
     text-align: center; 
-    border: 3px dashed var(--baby-pink); 
-    margin-bottom: 15px; 
-    animation: floating 3s ease-in-out infinite;
+    border: 3px solid var(--baby-pink); 
+    margin-bottom: 20px; 
+    animation: floating 4s ease-in-out infinite;
+    box-shadow: 0 10px 20px rgba(244, 207, 223, 0.3);
 }
-.love-counter h2 { margin: 0; color: var(--sage-green); font-size: 28px; }
+.love-counter h2 { margin: 5px 0 0; color: var(--sage-green); font-size: 32px; }
+.love-counter p { margin: 0; color: #888; font-size: 14px; font-weight: 700; }
 
 .table-container { 
     width: 100%; 
-    background: rgba(255,255,255,0.8); 
-    border-radius: 20px; 
-    padding: 10px; 
-    border: 2px solid var(--baby-pink); 
+    background: rgba(255,255,255,0.9); 
+    border-radius: 25px; 
+    padding: 15px; 
+    border: 3px solid white; 
     overflow-x: auto; 
     box-sizing: border-box; 
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
 }
 
-/* Scrollbar Cantik untuk Tabel */
-.table-container::-webkit-scrollbar {
-    width: 4px;
-}
-.table-container::-webkit-scrollbar-thumb {
-    background: var(--baby-pink);
-    border-radius: 10px;
-}
+/* Scrollbar Cantik */
+.table-container::-webkit-scrollbar { width: 5px; }
+.table-container::-webkit-scrollbar-thumb { background: var(--baby-pink); border-radius: 10px; }
 
 table { width: 100%; border-collapse: collapse; }
-td { padding: 12px 5px; text-align: center; font-size: 12px; border-bottom: 1px solid #f9f9f9; }
+td { padding: 14px 8px; text-align: center; font-size: 13px; border-bottom: 1px solid #f0f0f0; color: #666; }
+th { color: var(--sage-green); padding-bottom: 10px; font-size: 14px; }
 
-/* --- Sparkle & Grid Effect --- */
-.sparkle-trail { position: fixed; pointer-events: none; z-index: 9999; animation: fadeUp 1s forwards; }
-@keyframes fadeUp { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0) translateY(-20px); } }
-
+/* --- Effects --- */
 .fairy-dust { 
     position: fixed; 
     top: 0; left: 0; 
     width: 100%; height: 100%; 
-    /* Pola grid estetik transparan */
     background-image: 
-        linear-gradient(rgba(244, 207, 223, 0.2) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244, 207, 223, 0.2) 1px, transparent 1px);
-    background-size: 30px 30px;
+        radial-gradient(circle, var(--baby-pink) 1px, transparent 1px),
+        linear-gradient(rgba(244, 207, 223, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 207, 223, 0.1) 1px, transparent 1px);
+    background-size: 100px 100px, 40px 40px, 40px 40px;
     z-index: 0; 
 }
 
 .fab-heart { 
     position: fixed; 
-    bottom: 25px; 
-    right: 25px; 
-    width: 60px; 
-    height: 60px; 
-    background: var(--baby-pink); 
+    bottom: 30px; 
+    right: 30px; 
+    width: 70px; 
+    height: 70px; 
+    background: linear-gradient(135deg, var(--baby-pink), var(--deep-pink)); 
     border-radius: 50%; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    font-size: 28px; 
+    font-size: 32px; 
     z-index: 100; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+    box-shadow: 0 8px 25px rgba(255, 182, 193, 0.6); 
     cursor: pointer;
+    border: 3px solid white;
+}
+
+.pulse {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* --- Perbaikan Sparkle Trail --- */
+.sparkle-trail { 
+    position: fixed; 
+    pointer-events: none; 
+    z-index: 9999; 
+    animation: fadeUp 1s forwards;
+    /* Memastikan elemen muncul tepat di ujung kursor */
+    transform: translate(-50%, -50%); 
+    font-size: 20px;
+}
+
+@keyframes fadeUp { 
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+    100% { opacity: 0; transform: translate(-50%, -120%) scale(0); } 
 }

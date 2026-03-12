@@ -2,15 +2,22 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH
 
 let myChart;
 
-// --- Mouse Sparkle Trail ---
+// --- FIXED: Mouse Sparkle Trail ---
 document.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.15) return;
+    // Kurangi angka 0.15 jika ingin trail lebih banyak, naikkan jika ingin lebih sedikit
+    if (Math.random() > 0.15) return; 
+    
     const s = document.createElement('div');
     s.className = 'sparkle-trail';
     s.innerHTML = '✨';
+    
+    // Menggunakan clientX/Y agar trail mengikuti layar browser dengan presisi
     s.style.left = e.clientX + 'px';
     s.style.top = e.clientY + 'px';
+    
     document.body.appendChild(s);
+    
+    // Hapus elemen setelah 1 detik agar tidak menumpuk di DOM
     setTimeout(() => s.remove(), 1000);
 });
 
@@ -23,6 +30,32 @@ function updateLoveCounter() {
     document.getElementById('days-count').innerText = diffDays;
 }
 
+// --- Sweet Messages Logic ---
+const sweetQuotes = [
+    "Semangat kerjanya sayaang! ✨",
+    "Jangan lupa makann cantik 🌸",
+    "I'm so lucky to have you 💖",
+    "Haii cantikku sayaang 😊",
+    "You are my favorite notification 🦋",
+    "Inget ya, ada aku yang sayang kamu terus ✨",
+    "Senyum dong, biar hariku makin cerah 🥰"
+];
+
+function showRandomQuote() {
+    const quoteElement = document.getElementById('quote-display');
+    if (!quoteElement) return;
+
+    const random = sweetQuotes[Math.floor(Math.random() * sweetQuotes.length)];
+    
+    quoteElement.style.opacity = 0;
+    setTimeout(() => {
+        quoteElement.innerText = random;
+        quoteElement.style.opacity = 1;
+        quoteElement.style.transition = "opacity 0.5s ease";
+    }, 200);
+}
+
+// --- Fetch & Data Logic ---
 async function fetchData() {
     try {
         const response = await fetch(SHEET_CSV_URL);
@@ -82,37 +115,31 @@ function renderChart(sisa, keluar) {
     });
 }
 
+// --- Interaction Logic ---
 function heartBurst() {
     fetchData();
+    showRandomQuote(); 
+
     for(let i=0; i<15; i++){
         const h = document.createElement('div');
-        h.innerHTML = '💖'; h.style.position='fixed'; h.style.bottom='50px'; h.style.right='50px';
-        h.style.transition='all 0.8s ease-out'; h.style.zIndex='2000';
+        h.innerHTML = '💖'; 
+        h.style.position = 'fixed'; 
+        h.style.bottom = '50px'; 
+        h.style.right = '50px';
+        h.style.transition = 'all 0.8s ease-out'; 
+        h.style.zIndex = '2000';
+        h.style.pointerEvents = 'none'; 
         document.body.appendChild(h);
+        
         setTimeout(()=> { 
             h.style.transform = `translate(${(Math.random()-0.5)*400}px, -400px) scale(0)`; 
-            h.style.opacity='0'; 
+            h.style.opacity = '0'; 
         }, 10);
         setTimeout(()=> h.remove(), 800);
     }
 }
 
-window.onload = () => { fetchData(); updateLoveCounter(); };
-
-const sweetQuotes = [
-    "Semangat kerjanya sayaang! ✨",
-    "Jangan lupa makann cantik 🌸",
-    "I'm so lucky to have you 💖",
-    "Haii cantikku sayaang 😊"
-];
-
-function showRandomQuote() {
-    const random = sweetQuotes[Math.floor(Math.random() * sweetQuotes.length)];
-    alert(random); // Kamu bisa ganti ini dengan custom modal yang lebih cantik
-}
-
-// Panggil ini saat tombol FAB Heart diklik
-function heartBurst() {
-    // ... kode lama kamu ...
-    if (Math.random() > 0.7) showRandomQuote(); // Sesekali munculkan pesan
-}
+window.onload = () => { 
+    fetchData(); 
+    updateLoveCounter(); 
+};
