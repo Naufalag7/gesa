@@ -98,3 +98,21 @@ function heartBurst() {
 }
 
 window.onload = () => { fetchData(); updateLoveCounter(); };
+
+const sweetQuotes = [
+    "Semangat kerjanya sayaang! ✨",
+    "Jangan lupa makann cantik 🌸",
+    "I'm so lucky to have you 💖",
+    "Haii cantikku sayaang 😊"
+];
+
+function showRandomQuote() {
+    const random = sweetQuotes[Math.floor(Math.random() * sweetQuotes.length)];
+    alert(random); // Kamu bisa ganti ini dengan custom modal yang lebih cantik
+}
+
+// Panggil ini saat tombol FAB Heart diklik
+function heartBurst() {
+    // ... kode lama kamu ...
+    if (Math.random() > 0.7) showRandomQuote(); // Sesekali munculkan pesan
+}
