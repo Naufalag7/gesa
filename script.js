@@ -2,6 +2,18 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH
 
 let myChart;
 
+// --- Sparkle Trail ---
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.15) return;
+    const s = document.createElement('div');
+    s.className = 'sparkle-trail';
+    s.innerHTML = '✨';
+    s.style.left = e.clientX + 'px';
+    s.style.top = e.clientY + 'px';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1000);
+});
+
 function updateLoveCounter() {
     const startDate = new Date("2025-09-09");
     const today = new Date();
