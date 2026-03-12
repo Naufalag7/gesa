@@ -2,14 +2,17 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH
 
 let myChart;
 
-// --- Heart Sparkle Trail ---
+// Heart trail on move
 document.addEventListener('mousemove', (e) => {
-    if (Math.random() > 0.1) return; // Only create hearts occasionally
+    if (Math.random() > 0.15) return;
     const h = document.createElement('div');
-    h.classList.add('heart-particle');
+    h.style.position = 'fixed';
     h.innerHTML = '💖';
     h.style.left = e.clientX + 'px';
     h.style.top = e.clientY + 'px';
+    h.style.fontSize = '15px';
+    h.style.pointerEvents = 'none';
+    h.style.animation = 'fadeUp 1s forwards';
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 1000);
 });
@@ -28,12 +31,7 @@ async function fetchData() {
 
         dataRows.forEach(row => {
             const cols = row.split(',').map(c => c.replace(/"/g, '').trim());
-            
-            // FILTER ONLY COLUMNS F to I (Index 5 to 8)
-            const tanggal = cols[5];
-            const kategori = cols[6];
-            const nominalRaw = cols[7];
-            const keterangan = cols[8];
+            const [tanggal, kategori, nominalRaw, keterangan] = [cols[5], cols[6], cols[7], cols[8]];
 
             if (!tanggal || tanggal === "Tanggal" || !kategori) return;
 
@@ -48,7 +46,7 @@ async function fetchData() {
                     <td>${tanggal.substring(0, 6)}</td>
                     <td style="color: ${isMasuk ? '#6B8E23' : '#CD5C5C'}; font-weight: bold;">${kategori.substring(0, 3)}</td>
                     <td>Rp ${num.toLocaleString('id-ID')}</td>
-                    <td>${keterangan || "✨"}</td>
+                    <td>${keterangan || "✨🦋"}</td>
                 `;
                 tableBody.appendChild(tr);
             }
@@ -60,7 +58,7 @@ async function fetchData() {
         document.getElementById('sisa-saldo').innerText = `Rp ${sisa.toLocaleString('id-ID')}`;
 
         renderChart(sisa, totalKeluar);
-    } catch (e) { console.error("Error:", e); }
+    } catch (e) { console.error(e); }
 }
 
 function renderChart(sisa, keluar) {
@@ -74,7 +72,7 @@ function renderChart(sisa, keluar) {
                 data: [sisa, keluar],
                 backgroundColor: ['#FCF4A3', '#B8D1E6'],
                 borderColor: '#FFFFFF',
-                borderWidth: 4
+                borderWidth: 5
             }]
         },
         options: {
