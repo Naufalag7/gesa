@@ -1,0 +1,125 @@
+:root {
+    --sage-green: #B2AC88;
+    --baby-pink: #F4CFDF;
+    --soft-yellow: #FCF4A3;
+    --light-blue: #B8D1E6;
+    --bg-cream: #FFFDF9;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: var(--bg-cream);
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+    cursor: crosshair;
+}
+
+/* --- Container --- */
+.container {
+    width: 100%;
+    max-width: 1100px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    border-radius: 35px;
+    border: 5px solid var(--baby-pink);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
+}
+
+header {
+    background: var(--sage-green);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 700;
+    box-shadow: 0 5px 0 #928D6D;
+}
+
+/* --- Responsive Grid --- */
+.dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media (min-width: 900px) {
+    .dashboard-grid { flex-direction: row; }
+    .left-panel { width: 38%; }
+    .right-panel { width: 62%; }
+}
+
+/* --- Summary Cards --- */
+.summary-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 15px 20px;
+    border-radius: 18px;
+    font-weight: 700;
+    transition: all 0.3s;
+}
+
+.pink { background-color: var(--baby-pink); color: #7A5C69; }
+.blue { background-color: var(--light-blue); color: #4A6A8A; }
+.yellow { background-color: var(--soft-yellow); color: #8A7A4A; }
+
+.hover-glow:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
+
+/* --- Optimized Polaroid Image --- */
+.photo-frame {
+    background: white;
+    padding: 10px 10px 25px 10px;
+    border-radius: 4px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    margin: 25px auto;
+    position: relative;
+    width: 80%;
+    max-width: 250px;
+    transform: rotate(-2deg);
+    transition: 0.4s;
+}
+
+.photo-frame:hover { transform: rotate(0deg) scale(1.05); }
+
+.pin { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 20px; }
+.couple-art { width: 100%; height: auto; border-radius: 2px; }
+.photo-caption { font-family: cursive; margin-top: 10px; color: var(--sage-green); font-size: 1.1rem; }
+
+/* --- Table & Chart --- */
+.chart-section { background: white; height: 220px; border-radius: 25px; border: 2px dashed var(--light-blue); padding: 15px; }
+.table-container { height: 400px; overflow-y: auto; border-radius: 20px; padding: 5px; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+th { background: var(--sage-green); color: white; padding: 12px; border-radius: 10px; font-size: 13px; position: sticky; top: 0; z-index: 10; }
+td { background: white; padding: 12px; text-align: center; border-radius: 10px; font-size: 12px; border: 1px solid #f9f9f9; }
+
+/* --- Floating Elements --- */
+@keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.sticker { position: absolute; font-size: 40px; pointer-events: none; z-index: 1; }
+.s1 { top: 10px; left: 10px; }
+.s2 { top: 20px; right: 15px; }
+.float { animation: floating 3s infinite; }
+.float-delayed { animation: floating 4s infinite 1s; }
+
+.butterfly { position: absolute; font-size: 25px; opacity: 0.6; pointer-events: none; }
+.b1 { top: 15%; left: 5%; animation: floating 5s infinite; }
+.b2 { top: 50%; right: 5%; animation: floating 6s infinite 1s; }
+
+/* --- Cursor Hearts --- */
+.heart-particle { position: fixed; pointer-events: none; font-size: 14px; animation: fadeUp 1s forwards; z-index: 999; }
+@keyframes fadeUp { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-30px); } }
+
+.fab-heart {
+    position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px;
+    background: var(--baby-pink); border-radius: 50%; display: flex;
+    justify-content: center; align-items: center; font-size: 22px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer; z-index: 100;
+}

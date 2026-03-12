@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keuangan Naufal & Geisha ✨🦋</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="sticker float s1">🌼</div>
+    <div class="sticker float-delayed s2">🌸</div>
+    <div class="butterfly b1">🦋</div>
+    <div class="butterfly b2">🦋</div>
+
+    <div class="container fade-in">
+        <header>
+            <span class="sparkle">✨🦋</span> Naufal & Geisha <span class="sparkle">🦋✨</span>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="left-panel">
+                <div class="summary-container">
+                    <div class="summary-box blue hover-glow">
+                        <span>Masuk</span>
+                        <span id="total-masuk">Rp 0</span>
+                    </div>
+                    <div class="summary-box pink hover-glow">
+                        <span>Keluar</span>
+                        <span id="total-keluar">Rp 0</span>
+                    </div>
+                    <div class="summary-box yellow hover-glow">
+                        <span>Sisa</span>
+                        <span id="sisa-saldo">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="chart-section glass hover-lift">
+                    <canvas id="financeChart"></canvas>
+                </div>
+
+                <div class="photo-frame">
+                    <div class="pin">📌</div>
+                    <img src="embroidery.png" alt="Us" class="couple-art">
+                    <p class="photo-caption">I love you Geisha ✨</p>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="table-container glass">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tgl</th>
+                                <th>Kat</th>
+                                <th>Nominal</th>
+                                <th>Ket</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-table">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab-heart" onclick="fetchData()">💖</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
