@@ -1,23 +1,48 @@
-const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH0cCLqg5AI3A3Ri83cHL2SNov6BNMJrKqme-DPGd9NlrP9OcBnsuUjs8xJ43lGePyClme9t/pub?gid=1764720513&single=true&output=csv"; 
+const CONFIG = {
+    geisha: {
+        url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH0cCLqg5AI3A3Ri83cHL2SNov6BNMJrKqme-DPGd9NlrP9OcBnsuUjs8xJ43lGePyClme9t/pub?gid=1764720513&single=true&output=csv",
+        name: "Geisha",
+        caption: "I love you Geisha ✨"
+    },
+    naufal: {
+        url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH0cCLqg5AI3A3Ri83cHL2SNov6BNMJrKqme-DPGd9NlrP9OcBnsuUjs8xJ43lGePyClme9t/pub?gid=1421544875&single=true&output=csv",
+        name: "Naufal",
+        caption: "Semangat terus Naufal! 🚀"
+    }
+};
 
+let currentUser = 'geisha';
 let myChart;
 
-// --- FIXED: Mouse Sparkle Trail ---
-document.addEventListener('mousemove', (e) => {
-    // Kurangi angka 0.15 jika ingin trail lebih banyak, naikkan jika ingin lebih sedikit
-    if (Math.random() > 0.15) return; 
+// --- Switch User Logic ---
+function switchUser(user, btnElement) {
+    if (currentUser === user) return;
     
+    currentUser = user;
+
+    // Update Tab UI
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    // Update Header & Caption
+    document.getElementById('main-header').innerHTML = `<span class="magic-star">✨</span> ${CONFIG[user].name} <span class="magic-star">✨</span>`;
+    document.getElementById('photo-text').innerText = CONFIG[user].caption;
+
+    // Reset Table & Chart
+    document.getElementById('transaction-table').innerHTML = "<tr><td colspan='4'>Loading data...</td></tr>";
+    
+    fetchData();
+}
+
+// --- Mouse Sparkle Trail ---
+document.addEventListener('mousemove', (e) => {
+    if (Math.random() > 0.15) return; 
     const s = document.createElement('div');
     s.className = 'sparkle-trail';
     s.innerHTML = '✨';
-    
-    // Menggunakan clientX/Y agar trail mengikuti layar browser dengan presisi
     s.style.left = e.clientX + 'px';
     s.style.top = e.clientY + 'px';
-    
     document.body.appendChild(s);
-    
-    // Hapus elemen setelah 1 detik agar tidak menumpuk di DOM
     setTimeout(() => s.remove(), 1000);
 });
 
@@ -30,7 +55,6 @@ function updateLoveCounter() {
     document.getElementById('days-count').innerText = diffDays;
 }
 
-// --- Sweet Messages Logic ---
 const sweetQuotes = [
     "Semangat kerjanya sayaang! ✨",
     "Jangan lupa makann cantik 🌸",
@@ -43,22 +67,18 @@ const sweetQuotes = [
 
 function showRandomQuote() {
     const quoteElement = document.getElementById('quote-display');
-    if (!quoteElement) return;
-
     const random = sweetQuotes[Math.floor(Math.random() * sweetQuotes.length)];
-    
     quoteElement.style.opacity = 0;
     setTimeout(() => {
         quoteElement.innerText = random;
         quoteElement.style.opacity = 1;
-        quoteElement.style.transition = "opacity 0.5s ease";
     }, 200);
 }
 
 // --- Fetch & Data Logic ---
 async function fetchData() {
     try {
-        const response = await fetch(SHEET_CSV_URL);
+        const response = await fetch(CONFIG[currentUser].url);
         const csvText = await response.text();
         const rows = csvText.split(/\r?\n/).filter(row => row.trim() !== "");
         const dataRows = rows.slice(1); 
@@ -115,11 +135,9 @@ function renderChart(sisa, keluar) {
     });
 }
 
-// --- Interaction Logic ---
 function heartBurst() {
     fetchData();
     showRandomQuote(); 
-
     for(let i=0; i<15; i++){
         const h = document.createElement('div');
         h.innerHTML = '💖'; 
@@ -130,7 +148,6 @@ function heartBurst() {
         h.style.zIndex = '2000';
         h.style.pointerEvents = 'none'; 
         document.body.appendChild(h);
-        
         setTimeout(()=> { 
             h.style.transform = `translate(${(Math.random()-0.5)*400}px, -400px) scale(0)`; 
             h.style.opacity = '0'; 

@@ -281,3 +281,47 @@ th { color: var(--sage-green); padding-bottom: 10px; font-size: 14px; }
     0% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
     100% { opacity: 0; transform: translate(-50%, -120%) scale(0); } 
 }
+
+/* --- New Tab Navigation Styling --- */
+.tab-parent {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.tab-btn {
+    flex: 1;
+    max-width: 150px;
+    padding: 12px;
+    border: none;
+    border-radius: 18px;
+    background: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+}
+
+.tab-btn.active {
+    background: var(--sage-green);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(178, 172, 136, 0.3);
+    border-color: white;
+}
+
+.tab-btn:active {
+    transform: scale(0.95);
+}
+
+/* Memastikan chart tetap proporsional saat ganti data */
+canvas#financeChart {
+    max-width: 100% !important;
+    height: auto !important;
+}
