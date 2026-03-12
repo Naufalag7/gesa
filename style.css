@@ -14,7 +14,7 @@ body {
     overflow-x: hidden; min-height: 100vh;
 }
 
-/* --- Fixed Flying Logic --- */
+/* --- Flying Elements Logic --- */
 .butterfly, .bubble {
     position: fixed; pointer-events: none; z-index: 1000; display: inline-block;
 }
@@ -39,7 +39,7 @@ body {
 .bin2 { left: 50%; animation: rise 12s infinite 2s; font-size: 15px; }
 .bin3 { left: 85%; animation: rise 9s infinite 1s; font-size: 18px; }
 
-/* --- Symmetric Container --- */
+/* --- Container & Symmetric Alignment --- */
 .container {
     width: 100%; max-width: 950px;
     background: rgba(255, 255, 255, 0.5);
@@ -47,6 +47,7 @@ body {
     padding: 20px; border-radius: 35px; border: 5px solid var(--baby-pink);
     position: relative; z-index: 10;
     box-shadow: 0 10px 40px rgba(244, 207, 223, 0.3);
+    box-sizing: border-box;
 }
 
 header {
@@ -56,20 +57,20 @@ header {
     box-shadow: 0 0 20px var(--sage-green);
 }
 
-/* --- CENTERING FIX --- */
+/* SYMMETRY FIX: Centers all children on mobile */
 .dashboard-grid { 
     display: flex; flex-direction: column; 
-    gap: 20px; align-items: center; /* Center everything on mobile */
+    gap: 20px; align-items: center; 
 }
 
 .left-panel, .right-panel {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center boxes, charts, and photos */
+    align-items: center; 
 }
 
-.summary-container { width: 100%; max-width: 400px; }
+.summary-container { width: 100%; max-width: 450px; }
 
 @media (min-width: 900px) { 
     .dashboard-grid { flex-direction: row; align-items: flex-start; } 
@@ -77,6 +78,7 @@ header {
     .right-panel { width: 60%; }
 }
 
+/* --- UI Elements --- */
 .summary-box {
     display: flex; justify-content: space-between;
     margin-bottom: 12px; padding: 15px; border-radius: 15px;
@@ -86,8 +88,7 @@ header {
 .pink { background: var(--baby-pink); box-shadow: 0 0 15px var(--baby-pink); }
 .yellow { background: var(--soft-yellow); box-shadow: 0 0 15px var(--soft-yellow); }
 
-.squish { transition: transform 0.1s ease-in-out; cursor: pointer; }
-.squish:active { transform: scale(0.92); }
+.squish:active { transform: scale(0.92); transition: 0.1s; }
 
 /* --- Photo Frame --- */
 .photo-frame {
@@ -105,11 +106,15 @@ header {
 .love-counter { width: 100%; max-width: 300px; background: white; border-radius: 20px; padding: 15px; text-align: center; border: 3px dashed var(--baby-pink); margin-bottom: 15px; }
 .love-counter h2 { margin: 0; color: var(--sage-green); font-size: 28px; }
 
-.table-container { width: 100%; background: rgba(255,255,255,0.8); border-radius: 20px; padding: 10px; border: 2px solid var(--baby-pink); overflow-x: auto; box-sizing: border-box; }
+.table-container { 
+    width: 100%; background: rgba(255,255,255,0.8); 
+    border-radius: 20px; padding: 10px; border: 2px solid var(--baby-pink); 
+    overflow-x: auto; box-sizing: border-box; 
+}
 table { width: 100%; border-collapse: collapse; }
 td { padding: 12px 5px; text-align: center; font-size: 12px; border-bottom: 1px solid #f9f9f9; }
 
-/* --- Sparkle Trail --- */
+/* --- Sparkle Effect --- */
 .sparkle-trail { position: fixed; pointer-events: none; z-index: 9999; animation: fadeUp 1s forwards; }
 @keyframes fadeUp { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0) translateY(-20px); } }
 
