@@ -2,7 +2,7 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThK41-mH
 
 let myChart;
 
-// --- Sparkle Trail ---
+// --- Mouse Sparkle Trail ---
 document.addEventListener('mousemove', (e) => {
     if (Math.random() > 0.15) return;
     const s = document.createElement('div');
@@ -14,6 +14,7 @@ document.addEventListener('mousemove', (e) => {
     setTimeout(() => s.remove(), 1000);
 });
 
+// --- Love Counter ---
 function updateLoveCounter() {
     const startDate = new Date("2025-09-09");
     const today = new Date();
@@ -89,7 +90,7 @@ function heartBurst() {
         h.style.transition='all 0.8s ease-out'; h.style.zIndex='2000';
         document.body.appendChild(h);
         setTimeout(()=> { 
-            h.style.transform=`translate(${(Math.random()-0.5)*400}px, -400px) scale(0)`; 
+            h.style.transform = `translate(${(Math.random()-0.5)*400}px, -400px) scale(0)`; 
             h.style.opacity='0'; 
         }, 10);
         setTimeout(()=> h.remove(), 800);
