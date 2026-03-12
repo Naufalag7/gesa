@@ -9,207 +9,96 @@
 body {
     font-family: 'Quicksand', sans-serif;
     background-color: var(--bg-cream);
-    margin: 0;
-    padding: 30px 20px; /* Added more side space here */
-    display: flex;
-    justify-content: center;
-    overflow-x: hidden;
-    cursor: crosshair;
+    margin: 0; padding: 15px;
+    display: flex; justify-content: center;
+    overflow-x: hidden; min-height: 100vh;
 }
 
-.container {
-    width: 100%;
-    max-width: 1000px; /* Constrained width to create side space */
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(15px);
-    padding: 25px;
-    border-radius: 35px;
-    border: 5px solid var(--baby-pink);
-    box-sizing: border-box;
-    position: relative;
-    z-index: 5;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.05);
-}
-
-header {
-    background: var(--sage-green);
-    color: white;
-    text-align: center;
-    padding: 18px;
-    border-radius: 20px;
-    margin-bottom: 30px;
-    font-size: 32px; /* Bigger for Geisha! */
-    font-weight: 700;
-    position: relative;
-    overflow: hidden;
-}
-
-/* --- Shimmer Animation for Title --- */
-.shimmer-effect::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-    transform: rotate(30deg);
-    animation: shimmer 4s infinite;
-}
-
-@keyframes shimmer {
-    0% { transform: translateX(-100%) rotate(30deg); }
-    100% { transform: translateX(100%) rotate(30deg); }
-}
-
-/* --- Bubble Animations --- */
-.bubble {
+/* --- Fixed Flying Logic --- */
+.butterfly, .bubble {
     position: fixed;
-    bottom: -50px;
-    font-size: 20px;
-    opacity: 0.5;
-    z-index: 1;
-    animation: rise 8s infinite ease-in;
+    pointer-events: none;
+    z-index: 1000;
+    display: inline-block; /* MUST be inline-block to animate transforms */
+}
+
+@keyframes pathLeft {
+    0% { left: -50px; top: 20%; transform: rotate(0deg); }
+    100% { left: 110vw; top: 15%; transform: rotate(20deg); }
+}
+
+@keyframes pathRight {
+    0% { right: -50px; top: 70%; transform: scaleX(-1) rotate(0deg); }
+    100% { right: 110vw; top: 50%; transform: scaleX(-1) rotate(-20deg); }
 }
 
 @keyframes rise {
-    0% { bottom: -50px; transform: translateX(0); }
-    50% { transform: translateX(30px); }
-    100% { bottom: 110%; transform: translateX(-30px); }
+    0% { bottom: -50px; opacity: 0; }
+    20% { opacity: 0.5; }
+    100% { bottom: 110vh; opacity: 0; transform: translateX(40px); }
 }
 
-.bin1 { left: 10%; animation-duration: 10s; }
-.bin2 { left: 50%; animation-duration: 7s; animation-delay: 2s; }
-.bin3 { right: 15%; animation-duration: 9s; animation-delay: 4s; }
+.b-fast { animation: pathLeft 18s linear infinite; font-size: 26px; }
+.b-slow { animation: pathRight 25s linear infinite; font-size: 22px; }
+.bin1 { left: 10%; animation: rise 10s infinite; font-size: 20px; }
+.bin2 { left: 50%; animation: rise 12s infinite 2s; font-size: 15px; }
+.bin3 { left: 85%; animation: rise 9s infinite 1s; font-size: 18px; }
 
-/* --- Dashboard Grid & Panels --- */
-.dashboard-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+/* --- Layout & Glow --- */
+.container {
+    width: 100%; max-width: 950px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    padding: 20px; border-radius: 35px; border: 5px solid var(--baby-pink);
+    position: relative; z-index: 10;
+    box-shadow: 0 10px 40px rgba(244, 207, 223, 0.3);
 }
 
-@media (min-width: 900px) {
-    .dashboard-grid { flex-direction: row; }
-    .left-panel { width: 40%; }
+header {
+    background: var(--sage-green); color: white;
+    text-align: center; padding: 15px; border-radius: 20px;
+    margin-bottom: 25px; font-size: 32px; font-weight: 700;
+    box-shadow: 0 0 20px var(--sage-green);
+}
+
+.dashboard-grid { display: flex; flex-direction: column; gap: 20px; }
+@media (min-width: 900px) { 
+    .dashboard-grid { flex-direction: row; } 
+    .left-panel { width: 40%; } 
     .right-panel { width: 60%; }
 }
 
 .summary-box {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 15px 25px;
-    border-radius: 18px;
-    font-weight: 700;
-    transition: all 0.3s;
+    display: flex; justify-content: space-between;
+    margin-bottom: 12px; padding: 15px; border-radius: 15px;
+    font-weight: 700; font-size: 14px; color: #555;
 }
+.blue { background: var(--light-blue); box-shadow: 0 0 15px var(--light-blue); }
+.pink { background: var(--baby-pink); box-shadow: 0 0 15px var(--baby-pink); }
+.yellow { background: var(--soft-yellow); box-shadow: 0 0 15px var(--soft-yellow); }
 
-.pink { background-color: var(--baby-pink); color: #7A5C69; }
-.blue { background-color: var(--light-blue); color: #4A6A8A; }
-.yellow { background-color: var(--soft-yellow); color: #8A7A4A; }
+.squish { transition: transform 0.1s ease-in-out; cursor: pointer; }
+.squish:active { transform: scale(0.92); }
 
-.hover-glow:hover { transform: translateY(-5px) scale(1.02); }
-
-/* --- Polaroid Frame --- */
+/* --- Image Size Limiter --- */
 .photo-frame {
-    background: white;
-    padding: 12px 12px 30px 12px;
-    border-radius: 4px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    text-align: center;
-    margin: 30px auto;
-    width: 75%;
-    max-width: 240px;
-    transform: rotate(-3deg);
-    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: white; padding: 8px 8px 15px 8px;
+    border-radius: 5px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: center; margin: 20px auto; 
+    width: 160px; transform: rotate(-2deg);
 }
+.img-wrapper { width: 100%; height: 200px; overflow: hidden; border-radius: 2px; }
+#couple-img { width: 100%; height: 100%; object-fit: cover; }
+.photo-caption { font-family: cursive; font-size: 0.9rem; margin-top: 8px; color: var(--sage-green); }
 
-.photo-frame:hover { transform: rotate(0deg) scale(1.1); }
+/* --- Table & UI --- */
+.chart-section { height: 180px; margin-bottom: 10px; }
+.love-counter { background: white; border-radius: 20px; padding: 15px; text-align: center; border: 3px dashed var(--baby-pink); margin-bottom: 15px; }
+.love-counter h2 { margin: 0; color: var(--sage-green); font-size: 28px; }
 
-.couple-art { width: 100%; border-radius: 2px; }
-.photo-caption { font-family: 'Brush Script MT', cursive; margin-top: 15px; color: var(--sage-green); font-size: 1.3rem; }
+.table-container { background: rgba(255,255,255,0.8); border-radius: 20px; padding: 10px; border: 2px solid var(--baby-pink); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+td { padding: 12px 5px; text-align: center; font-size: 12px; border-bottom: 1px solid #f9f9f9; }
 
-/* Table & Chart */
-.chart-section { background: white; height: 240px; border-radius: 25px; border: 3px dashed var(--light-blue); padding: 15px; }
-.table-container { height: 450px; overflow-y: auto; border-radius: 20px; }
-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
-th { background: var(--sage-green); color: white; padding: 12px; border-radius: 12px; font-size: 14px; position: sticky; top: 0; }
-td { background: white; padding: 12px; text-align: center; border-radius: 12px; font-size: 13px; border: 1px solid #f2f2f2; }
-
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: var(--sage-green); border-radius: 10px; }
-
-.fab-heart {
-    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-    background: var(--baby-pink); border-radius: 50%; display: flex;
-    justify-content: center; align-items: center; font-size: 28px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1); cursor: pointer; z-index: 100;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-/* --- Floating Stickers & Butterflies --- */
-@keyframes floating {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-@keyframes flutter {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    25% { transform: scale(1.1) rotate(-5deg); }
-    75% { transform: scale(0.9) rotate(5deg); }
-}
-
-/* Applying animations to your specific elements */
-.float, .sticker {
-    display: inline-block; /* Critical for animations to work! */
-    animation: floating 4s ease-in-out infinite;
-}
-
-.float-delayed {
-    display: inline-block;
-    animation: floating 5s ease-in-out infinite 1s;
-}
-
-.butterfly {
-    display: inline-block;
-    font-size: 24px;
-    animation: flutter 0.6s ease-in-out infinite, floating 6s ease-in-out infinite;
-    filter: drop-shadow(0 0 5px var(--baby-pink));
-}
-
-/* --- Extra Cute Features --- */
-
-/* Header Sparkle Text */
-.shimmer-effect {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    animation: glowText 3s ease-in-out infinite alternate;
-}
-
-@keyframes glowText {
-    from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--baby-pink); }
-    to { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--light-blue); }
-}
-
-/* Hover effect for the table rows to make them feel "squishy" */
-tr:hover td {
-    background-color: var(--bg-cream);
-    transform: scale(1.02);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border-color: var(--baby-pink);
-    color: var(--sage-green);
-    cursor: pointer;
-}
-
-/* Polaroid Photo "Dance" on hover */
-.photo-frame:hover {
-    animation: photoDance 0.5s ease-in-out infinite alternate;
-}
-
-@keyframes photoDance {
-    from { transform: rotate(-3deg) translateY(0); }
-    to { transform: rotate(3deg) translateY(-10px); }
-}
+.fairy-dust { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 50px 50px; z-index: 0; opacity: 0.3; }
+.fab-heart { position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: var(--baby-pink); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 28px; z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
